@@ -1,0 +1,31 @@
+﻿<h3>AlbumLoader</h3>
+
+@code {
+
+    private List<Album> response;
+    private string? errorMessage;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var http = new HttpClient();
+            response = await http.GetFromJsonAsync<List<Album>>(
+            $"https://localhost:7283/RecordShop/Albums/");
+
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+}
+   
+@if(response != null)
+    {
+        <AlbumSummaryList albumList="response"/>
+    }
+    else
+    {
+        <LoadingScreen/>
+    }
