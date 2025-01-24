@@ -1,0 +1,69 @@
+﻿
+@rendermode InteractiveServer
+
+@code {
+
+    [Parameter]
+    public Album album { get; set; }
+
+    private AlbumModification albumUpdates = new AlbumModification();
+    private AlbumModification displayAlbum = new AlbumModification();
+
+    private bool attemptSubmit = false;
+    private bool submitted = false;
+
+    private void createSubmit()
+    {
+        StateHasChanged();
+        attemptSubmit = true;
+    }
+
+    private void showSubmitted(AlbumModification updatedAlbumMod) 
+    {
+        displayAlbum.Name = updatedAlbumMod.Name ?? album.Name;
+        displayAlbum.Artist = updatedAlbumMod.Artist ?? album.Artist;
+        displayAlbum.Released = updatedAlbumMod.Released ?? album.Released;
+        displayAlbum.Genre = updatedAlbumMod.Genre ?? album.Genre;
+        displayAlbum.Information = updatedAlbumMod.Information ?? album.Information;
+        submitted = !submitted;
+        StateHasChanged();
+    }
+
+}
+
+<section class="box id-block mt-4 md-4 p-4">
+    <p><b>Name: </b> @album.Name</p>
+    <InputText class="input is-grouped is-small" name="newNameInput" type="text" @bind-Value="albumUpdates.Name" placeholder="Enter a new name" style="width:35%"/>
+
+    <p style="margin-top: 0.3rem"><b>Artist: </b> @album.Artist</p>
+    <InputText class="input is-grouped is-small" name="newArtistInput" type="text" @bind-Value="albumUpdates.Artist" placeholder="Enter a new artist" style="width:35%" />
+
+    <p style="margin-top: 0.3rem"><b>Release: </b> @album.Released</p>
+    <input class="input is-grouped is-small" name="newReleaseInput" type="text" @bind-value="albumUpdates.Released" placeholder="Enter a new release date" style="width:35%" />
+
+    <p style ="margin-top: 0.3rem"><b>Genre: </b> @album.Genre</p>
+    <InputText class="input is-grouped is-small" name="newGenreInput" type="text" @bind-Value="albumUpdates.Genre" placeholder="Enter a new genre" style="width:35%" />
+
+    <p style ="margin-top: 0.3rem"><b>Information: </b> @album.Information</p>
+    <InputText class="input is-grouped is-small" name="newInformationInput" type="text" @bind-Value="albumUpdates.Information" placeholder="Enter new information" style="width:100%" />
+    <button class="button is-small outlined is-focus" @onclick="createSubmit" style="margin-top: 0.6rem">Save Changes</button>
+
+    
+    @if (attemptSubmit)
+    {
+        <PostConfirm Id=(int)album.Id modification=albumUpdates RenderUpdates="showSubmitted" />
+    }
+
+    
+    
+    @if (submitted)
+    {
+        <p class="mt-4 mb-2 has-text-weight-semibold">Updated album details:</p>
+        <p><b>Id: </b> @album.Id</p>
+        <p><b>Name: </b> @displayAlbum.Name</p>
+        <p><b>Artist: </b> @displayAlbum.Artist</p>
+        <p><b>Release: </b> @displayAlbum.Released</p>
+        <p><b>Genre: </b> @displayAlbum.Genre</p>
+        <p><b>Information: </b> @displayAlbum.Information</p>
+    }
+</section>
