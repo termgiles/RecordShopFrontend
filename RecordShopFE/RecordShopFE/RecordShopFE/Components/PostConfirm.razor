@@ -6,7 +6,7 @@
     private bool success;
 
     [Parameter]
-    public int Id { get; set; } = 3; //3 for testing
+    public int Id { get; set; }
 
     [Parameter]
     public  AlbumModification modification { get; set; }
@@ -35,7 +35,7 @@
             HttpResponseMessage response; 
 
             response = await http.PutAsJsonAsync<AlbumModification>(
-            $"https://localhost:7283/RecordShop/Album/557897180", modification);
+            $"https://localhost:7283/RecordShop/Album/{Id}", modification);
 
             updatedAlbum = await response.Content.ReadFromJsonAsync<Album>() ?? new Album();
             success = (updatedAlbum.Id != null) ? true : false;

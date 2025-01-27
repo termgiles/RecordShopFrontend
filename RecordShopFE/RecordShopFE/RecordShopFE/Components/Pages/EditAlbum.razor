@@ -1,0 +1,61 @@
+﻿@page "/EditAlbum"
+@rendermode InteractiveServer
+
+
+@code {
+
+    private Album? foundAlbum;
+    private string? errorMessage;
+    private int albumId;
+
+    private async Task GetFromForm()
+    {
+        await GetAlbumById(albumId);
+        StateHasChanged();
+    }
+
+    protected async Task GetAlbumById(int id)
+    {
+        try
+        {
+            var http = new HttpClient();
+            foundAlbum = await http.GetFromJsonAsync<Album>(
+            $"https://localhost:7283/RecordShop/Album/{id}");
+
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+
+}
+
+<link rel="stylesheet" href="bulma.css" />
+
+<PageTitle>Modifier un album</PageTitle>
+
+
+<form>
+    <button type="submit" class="button is-grouped is-small" name="refreshEditAlbum" id="refreshEditAlbum">Clear</button>
+</form>
+
+<Section>
+    <label for="newNameInput" style="margin-top: 0.3rem"><b>Search for an album by Id: </b></label><br />
+    <input class="input is-grouped is-small" name="albumIdInput" id="albumIdInput" type="int" @bind-value="albumId" placeholder="album Id" /><br />
+    <button class="button is-small outlined is-focus" @onclick="GetFromForm" style="margin-top: 0.6rem">Search</button>
+
+</Section>
+
+@if (foundAlbum != null)
+{
+    <AlbumDetails album="foundAlbum"/>
+}
+else if( albumId != 0)
+{
+    <LoadingScreen/>
+}
+else
+{
+    <p style="margin-top: 0.6rem">Enter an album id to modify ...</p>
+}
