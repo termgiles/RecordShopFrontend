@@ -1,0 +1,16 @@
+﻿@page "/ResponseCode/{Status:int}"
+
+
+@code {
+    [Parameter]
+    public int Status { get; set; }
+}
+
+<link rel="stylesheet" href="bulma.css" />
+
+@{
+    if (Status == 404)
+    {
+        <h3>alors non! Quatre cent quatre</h3>
+    }
+}
