@@ -1,0 +1,70 @@
+﻿@page "/Albums/{Id:int}"
+@rendermode InteractiveServer
+
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    public string titleString = "détails de l'album: ";
+
+    protected Album album;
+    protected string errorMessage;
+
+    public bool ModifyMode = false;
+
+    protected void enterModify()
+    {
+        StateHasChanged();
+        ModifyMode = !ModifyMode;
+        StateHasChanged();
+    }
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var http = new HttpClient();
+            album = await http.GetFromJsonAsync<Album>(
+            $"https://localhost:7283/RecordShop/Album/{Id}");
+
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+}
+
+<link rel="stylesheet" href="bulma.css" />
+
+<div class="row">
+    <div class="column" style="display: inline-block">
+        <TitleFont Text=@titleString />
+    </div>
+    <div class="column" style="display: inline-block">
+        <span class="is-family-sans-serif is-size-4 has-text-weight-semibold">@Id</span>
+    </div>
+</div>
+
+<section>
+    @if (album != null)
+    {
+        <AlbumSummary album="album" />
+         <button type="submit" class="button is-small outlined is-focus" @onclick="enterModify" style="margin-top: 0.6rem">Modifiez</button>
+    }
+    else
+    {
+        <LoadingScreen />
+    }
+</section>
+@if(ModifyMode)
+{
+    <section>
+        <AlbumDetails album="album"/>
+        <form>
+            <button type="submit" class="button is-small outlined is-focus" @onclick="enterModify" style="margin-top: 0.6rem">rafraîchissez</button>
+        </form>
+    </section>
+}

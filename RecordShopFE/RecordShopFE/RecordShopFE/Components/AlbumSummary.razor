@@ -1,15 +1,33 @@
-﻿
+﻿@rendermode InteractiveServer
 @code {
     [Parameter]
     public Album album { get; set;}
+
+    [Parameter]
+    public EventCallback<int> Navigate { get; set; }
+
+    private async Task Go(int albumId)
+    {
+
+        await Navigate.InvokeAsync(albumId);
+    }
+
+    private async void callNavigate()
+    {
+        Go((int)album.Id);
+    }
 }
 
-<p><b>Name: </b> @album.Name</p>
-<p><b>Artist: </b> @album.Artist</p>
-<p><b>Release: </b> @album.Released</p>
-<p><b>Genre: </b> @album.Genre</p>
-<p><b>Information: </b> @album.Information</p>
-<p><b>Ref#: </b> @album.Id</p>
+
+<div @onclick="callNavigate">
+    <p><b>Name: </b> @album.Name</p>
+    <p><b>Artist: </b> @album.Artist</p>
+    <p><b>Release: </b> @album.Released</p>
+    <p><b>Genre: </b> @album.Genre</p>
+    <p><b>Information: </b> @album.Information</p>
+    <p><b>Ref#: </b> @album.Id</p>
+</div>
+
 
 
 
