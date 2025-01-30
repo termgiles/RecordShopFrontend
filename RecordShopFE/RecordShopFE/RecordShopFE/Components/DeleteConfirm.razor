@@ -1,0 +1,36 @@
+﻿
+@code {
+    [Parameter]
+    public int albumId { get; set; }
+
+    protected bool success = false;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var http = new HttpClient();
+            HttpResponseMessage response;
+
+            response = await http.DeleteAsync($"https://localhost:7283/RecordShop/Album/{albumId}");
+            if(response.StatusCode == System.Net.HttpStatusCode.NoContent){
+                success = true;
+            }
+        }
+        catch (Exception ex)
+        {
+            success = false;
+            string errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+
+}
+
+@if (success)
+{
+    <div id="successBlock" class="block has-background-success" syle="display: inline-block">Database updated</div>
+}
+else
+{
+    <div id="successBlock" class="block has-background-danger" syle="display: inline-block">Databse not updated</div>
+}

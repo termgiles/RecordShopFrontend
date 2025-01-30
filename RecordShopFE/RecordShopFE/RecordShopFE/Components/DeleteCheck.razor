@@ -1,0 +1,37 @@
+﻿
+
+@code {
+    [Parameter]
+    public int Id { get; set;}
+    private bool confirmed = false;
+    private bool attemptSubmit = false;
+
+    private void confirmedChecked()
+    {
+        confirmed = !confirmed;
+        StateHasChanged();
+    }
+
+    private void createSubmit()
+    {
+        if (confirmed) attemptSubmit = true;
+        StateHasChanged();
+    }
+}
+
+<div class="row">
+    <div class="column">
+        <label for="confirmDelete" style="margin-top: 0.3rem" class="is-display-inline-block"><p>Confirmez l'effacement!</p></label>
+        <input type="checkbox" name="confirmDelete" id="confirmDelete" class="is-display-inline-block" @onclick="confirmedChecked" />
+    </div>
+
+    <div class="column">
+        <button type="submit" class="button is-small outlined is-focus is-display-inline-block" @onclick="createSubmit" style="margin-top: 0.6rem">Delete</button>
+    </div>
+</div>
+
+
+@if(attemptSubmit)
+{
+    <DeleteConfirm albumId="Id"/>
+}
