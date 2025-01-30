@@ -1,0 +1,93 @@
+﻿@using RecordShopFE.Models
+@rendermode InteractiveServer
+
+@code {
+
+    public Album? album { get; set; } = null;
+
+    private AlbumFieldsDto albumFields = new AlbumFieldsDto();
+    private AlbumModification albumModificaton = new AlbumModification();
+    private AlbumModification displayAlbum = new AlbumModification();
+    private int displayId;
+
+    private bool attemptSubmit = false;
+    private bool created = false;
+
+    // public void HandleValidSubmit()
+    // {
+    // }
+
+    private void createSubmit()
+    {
+        StateHasChanged();
+        albumModificaton.Name = albumFields.Name;
+        albumModificaton.Artist = albumFields.Artist;
+        albumModificaton.Released = albumFields.Released;
+        albumModificaton.Genre = albumFields.Genre;
+        albumModificaton.Information = albumFields.Information;
+        
+        attemptSubmit = true;
+    }
+
+    private void showCreated(Album createdAlbum)
+    {
+        displayId = (int)createdAlbum.Id!;
+        displayAlbum.Name = createdAlbum.Name ?? album.Name;
+        displayAlbum.Artist = createdAlbum.Artist ?? album.Artist;
+        displayAlbum.Released = createdAlbum.Released != 0 ? createdAlbum.Released : album.Released;
+        displayAlbum.Genre = createdAlbum.Genre ?? album.Genre; 
+        displayAlbum.Information = createdAlbum.Information ?? album.Information;
+
+        if(createdAlbum.Id != 0)
+        {
+            created = !created;
+        }
+        StateHasChanged();
+    }
+
+}
+
+<section class="box id-block mt-4 md-4 p-4">
+<EditForm FormName="NewAlbumForm" Model="@albumFields" onValidSubmit=@createSubmit>
+
+    <InputText class="input is-grouped is-small" name="newNameInput" id="NameInput" type="text" @bind-Value="albumFields.Name" placeholder="Enter a name" style="width:35%" />
+    <ValidationMessage For="@(() => albumFields.Name)"/>
+    <br />
+
+    <ValidationMessage For="@(() => albumFields.Name)"/>
+    <InputText class="input is-grouped is-small" name="ArtistInput" id="ArtistInput" type="text" @bind-Value="albumFields.Artist" placeholder="Enter an artist" style="width:35%" />
+    <ValidationMessage For="@(() => albumFields.Artist)" />
+    <br />
+
+    <InputNumber class="input is-grouped is-small" name="ReleaseInput" id="newReleaseInput" type="text" @bind-value="albumFields.Released" placeholder="Enter a new release date" style="width:35%" />
+    <ValidationMessage For="@(() => albumFields.Released)" />
+    <br />
+
+    <InputText class="input is-grouped is-small" name="newGenreInput" id="newGenreInput" type="text" @bind-Value="albumFields.Genre" placeholder="Enter a new genre" style="width:35%" />
+    <ValidationMessage For="@(() => albumFields.Genre)" />
+    <br />
+
+    <InputText class="input is-grouped is-small" name="newInformationInput" id="newInformationInput" type="text" @bind-Value="albumFields.Information" placeholder="Enter new information" style="width:100%" />
+    <ValidationMessage For="@(() => albumFields.Information)" />
+    <br />
+    <button type="submit" class="button is-small outlined is-focus" style="margin-top: 0.6rem">Save Changes</button>
+
+ </EditForm>
+
+    @if (attemptSubmit) 
+    {
+         <PostConfirm modification="albumModificaton" RenderUpdates="showCreated"/>
+    }
+
+    @if (created)
+    {
+        <p class="mt-4 mb-2 has-text-weight-semibold">Updated album details:</p>
+        <p><b>Id: </b> @displayId</p>
+        <p><b>Name: </b> @displayAlbum.Name</p>
+        <p><b>Artist: </b> @displayAlbum.Artist</p>
+        <p><b>Release: </b> @displayAlbum.Released</p>
+        <p><b>Genre: </b> @displayAlbum.Genre</p>
+        <p><b>Information: </b> @displayAlbum.Information</p>
+    }
+
+</section>

@@ -1,0 +1,62 @@
+﻿
+
+@code {
+    public Album updatedAlbum;
+
+    private bool success;
+
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public  AlbumModification modification { get; set; }
+
+
+    [Parameter]
+    public EventCallback<AlbumModification> RenderUpdates { get; set; }
+
+    private async Task InvokeShowSubmitted(Album updatedAlbum)
+    {
+        AlbumModification returnedUpdates= new AlbumModification {Name = updatedAlbum.Name,
+                                                                       Artist = updatedAlbum.Artist,
+                                                                       Released = updatedAlbum.Released,
+                                                                       Genre = updatedAlbum.Genre,
+                                                                       Information = updatedAlbum.Information};
+        await RenderUpdates.InvokeAsync(returnedUpdates);
+    }
+
+    //request
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            var http = new HttpClient();
+            HttpResponseMessage response; 
+
+            response = await http.PutAsJsonAsync<AlbumModification>(
+            $"https://localhost:7283/RecordShop/Album/{Id}", modification);
+
+            updatedAlbum = await response.Content.ReadFromJsonAsync<Album>() ?? new Album();
+            success = (updatedAlbum.Id != null) ? true : false;
+            await InvokeShowSubmitted(updatedAlbum);
+        }
+        catch (Exception ex)
+        {
+            success = false;
+            string errorMessage = $"An error occurred: {ex.Message}";
+        }
+    }
+
+}
+
+@if(success)
+{
+    <div id="successBlock" class="block has-background-success" syle="display: inline-block">Database updated</div>
+}
+else
+{
+    <div id="successBlock" class="block has-background-danger" syle="display: inline-block">Databse not updated</div>
+}
+
+

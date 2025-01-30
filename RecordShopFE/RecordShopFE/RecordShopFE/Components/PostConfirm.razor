@@ -1,45 +1,34 @@
-﻿
-
-@code {
-    public Album updatedAlbum;
+﻿@code {
+    public Album newAlbum;
 
     private bool success;
 
     [Parameter]
-    public int Id { get; set; }
-
-    [Parameter]
-    public  AlbumModification modification { get; set; }
+    public AlbumModification modification { get; set; }
 
 
     [Parameter]
-    public EventCallback<AlbumModification> RenderUpdates { get; set; }
+    public EventCallback<Album> RenderUpdates { get; set; }
 
-    private async Task InvokeShowSubmitted(Album updatedAlbum)
+    private async Task InvokeShowSubmitted(Album createdAlbum)
     {
-        AlbumModification returnedUpdates= new AlbumModification {Name = updatedAlbum.Name,
-                                                                       Artist = updatedAlbum.Artist,
-                                                                       Released = updatedAlbum.Released,
-                                                                       Genre = updatedAlbum.Genre,
-                                                                       Information = updatedAlbum.Information};
-        await RenderUpdates.InvokeAsync(returnedUpdates);
+        await RenderUpdates.InvokeAsync(createdAlbum);
     }
 
-    //request
+   
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             var http = new HttpClient();
-            HttpResponseMessage response; 
 
-            response = await http.PutAsJsonAsync<AlbumModification>(
-            $"https://localhost:7283/RecordShop/Album/{Id}", modification);
+            var response = await http.PostAsJsonAsync<AlbumModification>(
+            "https://localhost:7283/RecordShop/Album", modification);
 
-            updatedAlbum = await response.Content.ReadFromJsonAsync<Album>() ?? new Album();
-            success = (updatedAlbum.Id != null) ? true : false;
-            await InvokeShowSubmitted(updatedAlbum);
+            newAlbum = await response.Content.ReadFromJsonAsync<Album>() ?? new Album();
+            success = (newAlbum.Id != null) ? true : false;
+            await InvokeShowSubmitted(newAlbum);
         }
         catch (Exception ex)
         {
@@ -50,7 +39,8 @@
 
 }
 
-@if(success)
+
+@if (success)
 {
     <div id="successBlock" class="block has-background-success" syle="display: inline-block">Database updated</div>
 }
@@ -58,5 +48,3 @@ else
 {
     <div id="successBlock" class="block has-background-danger" syle="display: inline-block">Databse not updated</div>
 }
-
-
