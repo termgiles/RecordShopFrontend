@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RecordShopFE.Validators;
+using System.ComponentModel.DataAnnotations;
 
 namespace RecordShopFE.Models
 {
@@ -10,7 +11,7 @@ namespace RecordShopFE.Models
         public string Name { get; set; }
         [Required(ErrorMessage = "Doit inscrire un artiste")]
         public string Artist { get; set; }
-        [Required(ErrorMessage = "Doit entrer dans une annee")]
+        [ReleasedValidator(ErrorMessage = "base de données ne prend pas la musique avant l'existence de la France. Si c'est après 2035, contactez l'administrateur.")]
         public int Released { get; set; }
         [Required(ErrorMessage = "Doit entrer dans un gnere")]
         public string Genre { get; set; }

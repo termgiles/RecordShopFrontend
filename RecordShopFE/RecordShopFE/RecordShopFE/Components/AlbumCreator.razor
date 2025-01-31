@@ -48,29 +48,31 @@
 }
 
 <section class="box id-block mt-4 md-4 p-4">
+    <p class="has-text-weight-semibold">entrez l'information:</p>
 <EditForm FormName="NewAlbumForm" Model="@albumFields" onValidSubmit=@createSubmit>
+        <DataAnnotationsValidator />
 
-    <InputText class="input is-grouped is-small" name="newNameInput" id="NameInput" type="text" @bind-Value="albumFields.Name" placeholder="Enter a name" style="width:35%" />
+        <InputText class="input is-small" name="newNameInput" id="NameInput" type="text" @bind-Value="albumFields.Name" placeholder="Enter a name" style="width:35%; margin-top:0.6rem" />
     <ValidationMessage For="@(() => albumFields.Name)"/>
     <br />
 
     <ValidationMessage For="@(() => albumFields.Name)"/>
-    <InputText class="input is-grouped is-small" name="ArtistInput" id="ArtistInput" type="text" @bind-Value="albumFields.Artist" placeholder="Enter an artist" style="width:35%" />
+        <InputText class="input is-small" name="ArtistInput" id="ArtistInput" type="text" @bind-Value="albumFields.Artist" placeholder="Enter an artist" style="width:35%; margin-top:0.6rem" />
     <ValidationMessage For="@(() => albumFields.Artist)" />
     <br />
 
-    <InputNumber class="input is-grouped is-small" name="ReleaseInput" id="newReleaseInput" type="text" @bind-value="albumFields.Released" placeholder="Enter a new release date" style="width:35%" />
-    <ValidationMessage For="@(() => albumFields.Released)" />
+        <InputNumber class="input is-small" name="ReleaseInput" id="newReleaseInput" type="text" @bind-value="albumFields.Released" placeholder="Enter a new release date" style="width:35%; margin-top:0.6rem" />
+    <ValidationMessage For="@(() => albumFields.Released)" /> 
     <br />
 
-    <InputText class="input is-grouped is-small" name="newGenreInput" id="newGenreInput" type="text" @bind-Value="albumFields.Genre" placeholder="Enter a new genre" style="width:35%" />
+        <InputText class="input is-small" name="newGenreInput" id="newGenreInput" type="text" @bind-Value="albumFields.Genre" placeholder="Enter a new genre" style="width:35%; margin-top:0.6rem" />
     <ValidationMessage For="@(() => albumFields.Genre)" />
     <br />
 
-    <InputText class="input is-grouped is-small" name="newInformationInput" id="newInformationInput" type="text" @bind-Value="albumFields.Information" placeholder="Enter new information" style="width:100%" />
+        <InputText class="input is-small" name="newInformationInput" id="newInformationInput" type="text" @bind-Value="albumFields.Information" placeholder="Enter new information" style="width:100%; margin-top:0.6rem" />
     <ValidationMessage For="@(() => albumFields.Information)" />
     <br />
-    <button type="submit" class="button is-small outlined is-focus" style="margin-top: 0.6rem">Save Changes</button>
+        <button type="submit" class="button is-small outlined is-focus" style="margin-top: 0.6rem">Enregistrez</button>
 
  </EditForm>
 
