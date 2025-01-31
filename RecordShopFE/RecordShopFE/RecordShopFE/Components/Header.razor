@@ -1,24 +1,27 @@
 ﻿
 <link rel="stylesheet" href="~/bulma.css" />
-<div class="m-auto pl-6 pr-6 pt-2">
-    <div id="topMedia" class=" pb-6">
-        <h3 id="headerTitle" style="display: inline-flex" onclick="NavigatHome">Tom's Record Shop</h3><br/>
-        <h4 id="headerTagLie" style="display: inline-flex">Welcome to the Record Shop</h4>
-        <img src="https://picsum.photos/150/100" alt="Tom's Record Shop logo" style="float: right" />
+<link rel="stylesheet" href="~/custom.css" />
+
+<section id="headerSection">
+    <div class="m-auto pl-6 pr-6 pt-2">
+        <div id="topMedia" class=" pb-6">
+            <h3 id="headerTitle" style="display: inline-flex" onclick="NavigatHome">Tom's Record Shop</h3><br/>
+            <h4 id="headerTagLie" style="display: inline-flex">Welcome to the Record Shop français </h4>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/1599px-Flag_of_France.svg.png?20240925132318" alt="Flag of france" style="float: right; width:150px; height:auto; border-radius:50%" />
+        </div>
+        <nav>
+            <ul>
+                <a id="nav__buttons1"><NavLink href="/">Accueil</NavLink></a>
+                <a><NavLink href="/Albums">Tous les albums</NavLink></a>
+                <a><NavLink href="/EditAlbum">Modifier un album</NavLink></a>
+                <a><NavLink href="/Add-Album">Creez un album</NavLink></a>
+                <a><NavLink href="/DeleteAlbum">Supprimer un album</NavLink></a>
+
+
+            </ul>
+        </nav>
+
     </div>
-    <nav>
-        <ul>
-            <a><NavLink href="/">accueil</NavLink></a>
-            <a><NavLink href="/Albums">Tous les albums</NavLink></a>
-            <a><NavLink href="/EditAlbum">Modifier un album</NavLink></a>
-            <a><NavLink href="/Add-Album">Creez un album</NavLink></a>
-            <a><NavLink href="/DeleteAlbum">Supprimer un album</NavLink></a>
-
-
-        </ul>
-    </nav>
-
-</div>
-
+</section>
 @code {
 }
