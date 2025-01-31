@@ -19,19 +19,20 @@
     }
 }
 
-<div class="row">
-    <div class="column">
-        <label for="confirmDelete" style="margin-top: 0.3rem" class="is-display-inline-block"><p>Confirmez l'effacement!</p></label>
-        <input type="checkbox" name="confirmDelete" id="confirmDelete" class="is-display-inline-block" @onclick="confirmedChecked" />
+<section class="box id-block mt-4 md-4 p-4">
+    <div style="display: flex">
+        <div style="display:flex; flex-direction:row; justify-content:space-between;">
+            <label for="confirmDelete" style="margin-top: 0.3rem" class="is-display-inline-block"><p>Confirmez l'effacement!</p></label>
+            <input type="checkbox" name="confirmDelete" id="confirmDelete" class="is-display-inline-block" style="margin-top: 0.3rem; margin-left: 0.3rem;" @onclick="confirmedChecked" />
+        </div>
+        <div style="display: flex; flex-direction: row; justify-content:space-between;">
+            <button type="submit" class="button is-small outlined is-focus is-display-inline-block" @onclick="createSubmit" style="margin-top: 0.3rem; margin-left: 1.2rem;">Delete</button>
+        </div>
     </div>
 
-    <div class="column">
-        <button type="submit" class="button is-small outlined is-focus is-display-inline-block" @onclick="createSubmit" style="margin-top: 0.6rem">Delete</button>
-    </div>
-</div>
 
-
-@if(attemptSubmit)
-{
-    <DeleteConfirm albumId="Id"/>
-}
+    @if(attemptSubmit)
+    {
+        <DeleteConfirm albumId="Id"/>
+    }
+</section>
