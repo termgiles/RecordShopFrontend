@@ -1,26 +1,24 @@
 ﻿
-<link rel="stylesheet" href="~/bulma.css" />
-<link rel="stylesheet" href="~/custom.css" />
+<link rel="stylesheet" href="custom.css" />
+<link rel="stylesheet" href="bulma.css">
+
 
 <section id="headerSection">
-    <div class="m-auto pl-6 pr-6 pt-2">
+    <div class="m-auto pl-6 pr-6 pt-2" id="headerSection">
         <div id="topMedia" class=" pb-6">
-            <h3 id="headerTitle" style="display: inline-flex" onclick="NavigatHome">Tom's Record Shop</h3><br/>
-            <h4 id="headerTagLie" style="display: inline-flex">Welcome to the Record Shop français </h4>
+            <h3 id="headerTitle" style="display: inline-flex" onclick="NavigateHome">Tom's Record Shop</h3><br/>
+            <h4 id="headerTagLie" style="display: inline-flex">Bienvenue chez le disquaire français </h4>
             <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/c/c3/Flag_of_France.svg/1599px-Flag_of_France.svg.png?20240925132318" alt="Flag of france" style="float: right; width:150px; height:auto; border-radius:50%" />
         </div>
-        <nav>
+        <div class="pb-1">
             <ul>
-                <a id="nav__buttons1"><NavLink href="/">Accueil</NavLink></a>
-                <a><NavLink href="/Albums">Tous les albums</NavLink></a>
-                <a><NavLink href="/EditAlbum">Modifier un album</NavLink></a>
-                <a><NavLink href="/Add-Album">Creez un album</NavLink></a>
-                <a><NavLink href="/DeleteAlbum">Supprimer un album</NavLink></a>
-
-
-            </ul>
-        </nav>
-
+                <a class="pr-1" href="/">Accueil</a>
+                <a class="pr-1"><NavLink href="/Albums">Tous les albums</NavLink></a>
+                <a class="pr-1"><NavLink href="/EditAlbum">Modifier un album</NavLink></a>
+                <a class="pr-1"><NavLink href="/Add-Album">Creez un album</NavLink></a>
+                <a class="pr-1"><NavLink href="/DeleteAlbum">Supprimer un album</NavLink></a>
+             </ul>
+        </div>
     </div>
 </section>
 @code {
